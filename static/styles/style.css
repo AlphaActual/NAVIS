@@ -1,0 +1,69 @@
+body {
+    background-image: linear-gradient(to bottom,white, #8aaeffd1);
+    min-height: 100vh;
+    height: 100%;   
+}
+.font-righteous {
+    font-family: 'Righteous', cursive;
+}
+.home-link {
+    border-right: 1px solid black;
+
+}
+/* .container {
+    min-height: 100vh
+} */
+.box-style {
+    border-radius: 10px;
+    background-color: #fbfbfb;
+    
+    -webkit-box-shadow: -10px 10px 15px 0px rgba(106,117,171,0.24);
+    -moz-box-shadow: -10px 10px 15px 0px rgba(106,117,171,0.24);
+    box-shadow: -10px 10px 15px 0px rgba(106,117,171,0.24); 
+}
+
+.min-height100vh {
+    min-height: 100vh;
+}
+.min-button-width {
+    min-width: 5rem;
+}
+
+/* ANIMATIONS */
+@keyframes opac {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slide-right {
+    from {
+      right: -100px;
+      opacity: 0;
+    }
+    to {
+      right: 0px;
+      opacity: 1;
+    }
+  }  
+
+.fade-in {
+    opacity: 0;
+    animation: opac 2s;
+    animation-fill-mode: forwards; /*The element will retain the style values that is set by the last keyframe (opacity:1) */
+}
+
+.slide-right {
+    position: relative;
+    animation: slide-right 1.2s;
+}
+.success-icon {
+    color: #198754;
+}
+.fail-icon {
+    color: #dc3545;
+}
+  

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats</title>
+    <!-- Bootstrap5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <!-- My custom style -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
+</head>
+
+<body>
+     <!-- NAV -->
+     <nav class="navbar navbar-light navbar-expand-lg fs-5">
+      <div class="container-fluid">
+          <a class="navbar-brand fs-3 font-righteous text-primary ps-2" href="#">NAVIS</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+              <li class="nav-item">
+                <a class="nav-link active home-link pe-3" aria-current="page" href="{{url_for('home')}}">Home</a>
+              </li>
+             
+              <li class="nav-item dropdown ms-3">
+                <a class="nav-link dropdown-toggle text-danger" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Services
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{{url_for('register_voyage')}}">Departure registration</a></li>
+                  <li><a class="dropdown-item bg-success text-light" href="{{url_for('complete_voyage')}}">Complete voyage</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('show_departures')}}">Departures</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('search_vessel')}}">Vessel info</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{{url_for('show_stats')}}">Stats</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Admin
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{{url_for('register_vessel')}}">Vessel registration</a></li>
+                </ul>
+              </li>
+              
+            </ul>
+            
+          </div>
+        </div>
+  </nav>
+  <!-- END OF NAV -->
+
+
+    <div class="container">
+      <div class="row min-height100vh align-items-center">
+        <div class="col-12 p-5 my-5 box-style">
+          <h1 class="display-2"> Most visited destinations</h1>
+          <canvas id="portsChart" width="200" height="50"></canvas>
+        </div>
+        <div class="col-12 p-5 mb-5 box-style">
+          <h1 class="display-2"> Top travelers</h1>
+          <canvas id="shipsChart" width="200" height="50"></canvas>
+        </div>
+        <div class="col-12 p-5 mb-5 box-style">
+          <h1 class="display-2"> Top passengers transferred</h1>
+          <canvas id="passengersChart" width="200" height="50"></canvas>
+        </div>
+      </div>
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+
+    <script>
+
+       // graph 1
+      var data1 = {
+        labels:{{x_graph1|safe}},
+        datasets:[{
+            label:"Visits per destiantion",
+            backgroundColor: "#0d6efd",
+            borderColor: "red",
+            data:{{y_graph1|safe}}
+            }]
+        }
+        
+    const graph1 = document.getElementById("portsChart")
+    const config1 = {
+        type:"bar",
+        data:data1,
+        options: {
+          scale: {
+            ticks: {
+              precision: 0
+            }
+          }
+        }
+    }
+    const chart = new Chart(graph1, config1)
+
+    // graph 2
+    var data2 = {
+      labels:{{x_graph2|safe}},
+      datasets:[{
+          label:"Voyages per ship",
+          backgroundColor: "#dc3545",
+          borderColor: "red",
+          data:{{y_graph2|safe}}
+          }]
+      }
+      
+  const graph2 = document.getElementById("shipsChart")
+  const config2 = {
+      type:"bar",
+      data:data2,
+      options: {
+        scale: {
+          ticks: {
+            precision: 0
+          }
+        }
+      }
+  }
+  const chart2 = new Chart(graph2, config2)
+
+  // graph3
+
+  var data3 = {
+    labels:{{x_graph3|safe}},
+    datasets:[{
+        label:"Passengers per ship",
+        backgroundColor: "#0d6efd",
+        borderColor: "red",
+        data:{{y_graph3|safe}}
+        }]
+    }
+    
+const graph3 = document.getElementById("passengersChart")
+const config3 = {
+    type:"bar",
+    data:data3,
+    options: {
+      scale: {
+        ticks: {
+          precision: 0
+        }
+      }
+    }
+}
+const chart3 = new Chart(graph3, config3)
+
+    </script>
+</body>
+</html>

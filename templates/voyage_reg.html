@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyage registration</title>
+    <!-- Bootstrap5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <!-- My custom style -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
+</head>
+
+<body>
+    
+    <!-- NAV -->
+    <nav class="navbar navbar-light navbar-expand-lg fs-5">
+      <div class="container-fluid">
+          <a class="navbar-brand fs-3 font-righteous text-primary ps-2" href="#">NAVIS</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+              <li class="nav-item">
+                <a class="nav-link active home-link pe-3" aria-current="page" href="{{url_for('home')}}">Home</a>
+              </li>
+             
+              <li class="nav-item dropdown ms-3">
+                <a class="nav-link dropdown-toggle text-danger" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Services
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{{url_for('register_voyage')}}">Departure registration</a></li>
+                  <li><a class="dropdown-item bg-success text-light" href="{{url_for('complete_voyage')}}">Complete voyage</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('show_departures')}}">Departures</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('search_vessel')}}">Vessel info</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{{url_for('show_stats')}}">Stats</a></li>
+                </ul>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Admin
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{{url_for('register_vessel')}}">Vessel registration</a></li>
+                </ul>
+              </li>
+              
+            </ul>
+            
+          </div>
+        </div>
+  </nav>
+  <!-- END OF NAV -->
+
+    <div class="container min-height100vh">
+      <div class="row align-content-center">
+
+        <!-- Main title -->
+        <div class="p-4 mt-5">
+          <h1 class="display-3">Voyage registration form</h1>
+          <span class="fs-5 text-muted ms-lg-3">Please fill all the fields to complete the voyage registration </span>
+        </div>
+        <!-- END OF Main title -->
+
+        <!-- Main form box -->
+        <div class="col box-style p-3  slide-right">
+          {% block content %}
+          <form method="post">
+            <div class="row">
+              <div class=" col-sm-12 col-lg-6">
+
+                <!-- COL1 -->
+                <div class="mb-3">
+                  <label for="IMO" class="form-label" >IMO number</label>
+                  <input type="text" name="IMO" class="form-control" id="IMO" aria-describedby="IMO number"  required pattern="[0-9]{7}" placeholder="7 digit number" value="{{request.form['IMO']}}">
+                </div>
+
+                <div class="mb-3">
+                  <label for="port_dep" class="form-label">Port of departure</label>
+                  <input type="text" name="port_dep" class="form-control" id="port_dep" aria-describedby="Port of departure" required value="{{request.form['port_dep']}}">
+                </div>
+                
+                <div class="mb-3">
+                  <label for="port_dest" class="form-label">Destination</label>
+                  <input type="text" name="port_dest" class="form-control" id="port_dest" aria-describedby="Port of destination" required value="{{request.form['port_dest']}}">
+                </div>
+
+                <div class="mb-3">
+                  <label for="passengers" class="form-label">Passengers</label>
+                  <input type="number" name="passengers" class="form-control" id="passengers" aria-describedby="Passengers" value="{{request.form['passengers']}}">
+                </div>
+              </div>
+              <!--END OF COL1 -->
+
+              <!-- COL2 -->
+              <div class="col-sm-12 col-lg-6">
+                <div class="mb-3">
+                  <label for="ATD" class="form-label">Actual time of departure(ATD)</label>
+                  <input type="datetime-local" name="ATD" class="form-control" id="ATD" aria-describedby="Actual time of departure" required value="{{request.form['ATD']}}">
+                </div>
+                <div class="mb-3">
+                  <label for="ETA" class="form-label">Estimated time of arrival(ETA)</label>
+                  <input type="datetime-local" name="ETA" class="form-control" id="ETA" aria-describedby="Estimated time of arrival" required value="{{request.form['ETA']}}">
+                </div>
+                <!-- <div class="mb-3">
+                  <label for="ATA" class="form-label">Actual time of arrival(ATA)</label>
+                  <input type="datetime-local" name="ATA" class="form-control" id="ATA" aria-describedby="Actual time of arrival"  value="{{request.form['ATA']}}">
+                </div> -->
+                <div class="mb-3">
+                  <label for="DG" class="form-label">Dangerous cargo(t)</label>
+                  <input type="number" name="DG" class="form-control" id="DG" aria-describedby="Dangerous cargo" value="{{request.form['DG']}}">
+                </div>
+
+                <!-- Submit button -->
+                <div class="d-flex justify-content-end">
+                  <input type="submit" class="btn btn-danger" value = "Submit">
+                </div>
+                <!-- END OF Submit button --> 
+              </div>
+              <!--END OF COL2 -->
+
+            </div>
+          </form>
+          {% endblock %}
+        </div>
+        <!-- END OF Main form box -->
+      </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
