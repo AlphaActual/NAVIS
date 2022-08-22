@@ -63,17 +63,28 @@
     </nav>
     <!-- END OF NAV -->
 
-    <div class="container">
-        <h1 class="display-3">Welcome to NAVIS
-            <br>
-            <span class="display-5">North Adriatic vessel information system  </span> 
-        </h1>
-        <p>
+    <div class="container main-container min-height90vh">
+      <div class="row">
+        <div class="col-12 col-lg-6">
+
+          <h1 class="display-1 mt-5">Welcome to NAVIS
+          </h1>
+          <br>
+          <span class="display-5">North Adriatic vessel information system  </span> 
+          <p class="mt-5">
             NAVIS is a Croatian vessel registration system, used to monitor and record vessel data to improve safety at sea.
-        </p>
-        <a href="{{url_for('register_voyage')}}" class="btn btn-danger text-light fade-in">Register departure</a>
-        <a href="{{url_for('show_departures')}}" class="btn btn-primary fade-in">Departure list</a>
-        <a href="{{url_for('search_vessel')}}" class="btn btn-primary fade-in">Vessel info</a>
+          </p>
+          <a href="{{url_for('register_voyage')}}" class="btn btn-danger text-light fade-in">Register departure</a>
+          <a href="{{url_for('show_departures')}}" class="btn btn-primary fade-in">Departure list</a>
+          <a href="{{url_for('search_vessel')}}" class="btn btn-primary fade-in">Vessel info</a>
+          <!-- <img src="{{ url_for('static',filename='images/ship.png') }}" class="img-fluid" alt=""> -->
+
+        </div>
+
+        <div class="col-12 col-lg-6 p-5 ">
+          <img class="img-fluid" src="{{ url_for('static',filename='images/ship.svg') }}" alt="Ship">
+        </div>
+      </div>
     </div>
 
 
