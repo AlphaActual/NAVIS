@@ -1,45 +1,16 @@
 
 from flask import Flask, request, make_response, jsonify, render_template, url_for, redirect
-from db_connector import add_vessel, get_vessels, remove_vessel, update_vessel, add_voyage, get_departures, update_voyage, get_stats
+from db_connector import get_vessels, remove_vessel, update_vessel, add_voyage, get_departures, update_voyage, get_stats
+from admin import admin
 
 
 app = Flask(__name__)
+app.register_blueprint(admin, url_prefix="")
 
+# Home page route
 @app.route("/")
 def home():
     return render_template("index.html")
-    
-
-
-@app.route("/vessel/registration", methods=['POST','GET'])
-def register_vessel():
-    if request.method == "POST":
-        
-        try:
-            # json_request = request.form --> ne moze! jer ce cijena biti zapisana kao prazan string ''
-            # kako bi rijesili taj problem prepisati cemo dict "form" u dict "json_request" uz uvjet da cijena nije ''
-            json_request = {}
-            for key,value in request.form.items(): # reminder! .items sluzi da bi mogli rastaviti dict na key i value
-                if value == '':
-                    json_request[key] = None
-                else:    
-                    json_request[key] = value
-            
-        except Exception as e:
-            response = {"response":str(e)}
-            return make_response(jsonify(response),400)    
-
-        # poziv bazi podataka
-        response = add_vessel(json_request)
-
-        if 'error' in response: 
-                return make_response(render_template("fail.html",error=str(response['error'])),400)
-
-        msg = {"msg":"Vessel successfuly added to register!"} 
-        return make_response(render_template("success.html",data=msg), 200)    
-    else:
-        return make_response(render_template("vessel_reg.html"), 200)
-
 
 
 @app.route("/voyage/registration", methods=['POST','GET'])
@@ -221,8 +192,11 @@ def show_stats():
         return make_response(render_template("stats.html", x_graph1 = ports, y_graph1 = visits,x_graph2 = ships, y_graph2 = voyages,x_graph3 = vessels, y_graph3 = passengers), 200)  
 
 
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='0.0.0.0', debug=True)
+
 
     
 
