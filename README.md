@@ -26,7 +26,7 @@ Aplikacija je podjeljenja na:
 
    API za korisnika uključuje funkcije koje omogućavaju pregled podataka o brodovima, putovanjima, prijavu i zaključivanje putovanja te statistiku
    
-   API za Admina uključuje upis/editiranje/brisanje plovila u/iz registra
+   API za Admina uključuje upis/editiranje/brisanje plovila u/iz registra i pregled upozorenja o prekrcaju/opasnom teretu
 ---
 ## Pokretanje aplikacije lokalno ##
 
