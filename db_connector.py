@@ -39,6 +39,16 @@ class Voyage(DB.Entity):
     status = orm.Required(str, default="On route")
     vessel = orm.Required(Vessel)
 
+class Alert(DB.Entity):
+    id = orm.PrimaryKey(int, auto=True)
+    IMO = orm.Required(str)
+    name = orm.Required(str)
+    passengers = orm.Required(int)
+    pass_cap = orm.Required(int)
+
+    DG = orm.Optional(int)
+    
+
 
 DB.bind(provider="sqlite", filename="ShippingRegister.sqlite", create_db=True)
 DB.generate_mapping(create_tables=True)
@@ -130,6 +140,54 @@ def add_voyage(voyage_data):
             name = vsl["name"]
             Voyage(IMO=IMO,name=name,port_dep=port_dep,port_dest=port_dest,passengers=passengers,ATD=ATD,ETA=ETA,ATA=ATA,DG=DG,vessel=vessel)
             response = {"response":"Success"}
+
+            # checking for overloading and DG cargo onboard with passengers
+            if passengers != None:
+                vsl_pass_cap = vsl["pass_cap"]
+                declared_pass = int(passengers)
+                if declared_pass > vsl_pass_cap or DG != None:
+                    alert_data = {}
+
+                    voyage_ids = orm.select(voyage.id for voyage in Voyage)[:]
+                    voyage_ids.sort()
+                    print(voyage_ids)
+                    print(voyage_ids[-1])
+
+                    alert_data["id"] = voyage_ids[-1]
+                    alert_data["IMO"] = IMO
+                    alert_data["name"] = name
+                    alert_data["passengers"] = passengers
+                    alert_data["pass_cap"] = vsl_pass_cap
+                    alert_data["DG"] = DG
+                
+                    add_alert(alert_data)
+
+
+            return response
+    except Exception as e:
+        return {"response":"Fail","error":str(e)}
+
+
+def add_alert(alert_data):
+
+    try:
+        id = alert_data["id"]
+        IMO = alert_data["IMO"] 
+        name = alert_data["name"]
+        passengers = alert_data["passengers"]
+        pass_cap = alert_data["pass_cap"]
+        
+        #optional
+        try:
+            DG = alert_data["DG"]
+        except ValueError:
+            DG = None
+
+
+        with orm.db_session:
+            
+            Alert(id=id,IMO=IMO,name=name,passengers=passengers,pass_cap=pass_cap,DG=DG)
+            response = {"response":"Success"}
             return response
     except Exception as e:
         return {"response":"Fail","error":str(e)}
@@ -141,7 +199,7 @@ def get_vessels(search_data):
         with orm.db_session:
 
             search_term = search_data["search_term"]
-            # traži prema određenom identifikatoru ili ako nije specificiran (home page search forma) koristi "IMO" broj za pretragu
+            # traži prema određenom identifikatoru ili ako nije specificiran (home page search forma) koristi ime za pretragu
             if "identificator" in search_data:
                 identificator = search_data["identificator"]
             else:
@@ -185,6 +243,27 @@ def get_departures():
     except Exception as e:
         return {"response":"Fail","error":e}
 
+def get_alerts():
+    try:
+        with orm.db_session:
+            
+            #lista rezultata
+            results = orm.select(row for row in Alert)[:]
+            #pretvaranje liste Vessel objekata u dictionary json_results
+            json_results = [r.to_dict() for r in results]
+            #Zamjena None vrijednosti sa stringom "N/A"
+            for item in json_results:               
+                for key,v_ in item.items():
+                    if item[key] == None:
+                        item[key] = "N/A"
+
+            # sending last 12 alerts
+            response = {"response":"Success","data":json_results[-12:]}
+            return response
+
+    except Exception as e:
+        return {"response":"Fail","error":e}
+
 
 def get_stats():
     try:
@@ -206,10 +285,7 @@ def get_stats():
             print(results_ports_visits)
             print(results_ports_visits_sorted)
             
-            
-                
-                
-    
+  
             results = {"graph1":results_ports_visits_sorted,
                         "graph2":results_ship_voyages_sorted,
                         "graph3":results_ship_passangers_sorted

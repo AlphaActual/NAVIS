@@ -1,5 +1,5 @@
-from flask import Flask, request, make_response, jsonify, render_template,Blueprint
-from db_connector import get_vessels, add_voyage, get_departures, update_voyage, get_stats
+from flask import request, make_response, jsonify, render_template, Blueprint
+from db_connector import get_alerts, get_vessels, add_voyage, get_departures, update_voyage, get_stats, add_alert, get_alerts
 
 user = Blueprint("user", __name__, static_folder="static", template_folder="templates")
 
@@ -9,10 +9,8 @@ def register_voyage():
     if request.method == "POST":
         
         try:
-            # json_request = request.form --> ne moze! jer ce cijena biti zapisana kao prazan string ''
-            # kako bi rijesili taj problem prepisati cemo dict "form" u dict "json_request" uz uvjet da cijena nije ''
             json_request = {}
-            for key,value in request.form.items(): # reminder! .items sluzi da bi mogli rastaviti dict na key i value
+            for key,value in request.form.items(): 
                 if value == '':
                     json_request[key] = None
                 else:    
@@ -75,6 +73,18 @@ def show_departures():
                 return make_response(render_template("fail.html",error=str(response['error'])),400)
    
         return make_response(render_template("departures.html",data=response["data"]), 200)    
+
+### show alerts ###
+@user.route("/alerts")
+def show_alerts():
+
+        # poziv bazi podataka
+        response = get_alerts()
+        
+        if 'error' in response: 
+                return make_response(render_template("fail.html",error=str(response['error'])),400)
+   
+        return make_response(render_template("alerts.html",data=response["data"]), 200)    
     
 
 ### complete the voyage ###
