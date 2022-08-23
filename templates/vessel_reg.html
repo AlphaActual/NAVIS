@@ -36,12 +36,12 @@
                   Services
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="{{url_for('register_voyage')}}">Departure registration</a></li>
-                  <li><a class="dropdown-item bg-success text-light" href="{{url_for('complete_voyage')}}">Complete voyage</a></li>
-                  <li><a class="dropdown-item" href="{{url_for('show_departures')}}">Departures</a></li>
-                  <li><a class="dropdown-item" href="{{url_for('search_vessel')}}">Vessel info</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('user.register_voyage')}}">Departure registration</a></li>
+                  <li><a class="dropdown-item bg-success text-light" href="{{url_for('user.complete_voyage')}}">Complete voyage</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('user.show_departures')}}">Departures</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('user.search_vessel')}}">Vessel info</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{{url_for('show_stats')}}">Stats</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('user.show_stats')}}">Stats</a></li>
                 </ul>
               </li>
 

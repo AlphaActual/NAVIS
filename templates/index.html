@@ -34,12 +34,12 @@
                     Services
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="{{url_for('register_voyage')}}">Departure registration</a></li>
-                    <li><a class="dropdown-item bg-success text-light" href="{{url_for('complete_voyage')}}">Complete voyage</a></li>
-                    <li><a class="dropdown-item" href="{{url_for('show_departures')}}">Departures</a></li>
-                    <li><a class="dropdown-item" href="{{url_for('search_vessel')}}">Vessel info</a></li>
+                    <li><a class="dropdown-item" href="{{url_for('user.register_voyage')}}">Departure registration</a></li>
+                    <li><a class="dropdown-item bg-success text-light" href="{{url_for('user.complete_voyage')}}">Complete voyage</a></li>
+                    <li><a class="dropdown-item" href="{{url_for('user.show_departures')}}">Departures</a></li>
+                    <li><a class="dropdown-item" href="{{url_for('user.search_vessel')}}">Vessel info</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{{url_for('show_stats')}}">Stats</a></li>
+                    <li><a class="dropdown-item" href="{{url_for('user.show_stats')}}">Stats</a></li>
                   </ul>
                 </li>
 
@@ -54,7 +54,7 @@
                 </li>
                 
               </ul>
-              <form class="d-flex" action="{{ url_for('search_vessel') }}" method="post">
+              <form class="d-flex" action="{{ url_for('user.search_vessel') }}" method="post">
                 <input class="form-control me-2" name="search_term" type="text" placeholder="Search by name" aria-label="Search by IMO number" value="{{request.form['search_term']}}" required>
                 <button class="btn btn-primary" type="submit">Search</button>
               </form>
@@ -74,9 +74,9 @@
           <p class="mt-5">
             NAVIS is a Croatian vessel registration system, used to monitor and record vessel data to improve safety at sea.
           </p>
-          <a href="{{url_for('register_voyage')}}" class="btn btn-danger text-light fade-in">Register departure</a>
-          <a href="{{url_for('show_departures')}}" class="btn btn-primary fade-in">Departure list</a>
-          <a href="{{url_for('search_vessel')}}" class="btn btn-primary fade-in">Vessel info</a>
+          <a href="{{url_for('user.register_voyage')}}" class="btn btn-danger text-light fade-in">Register departure</a>
+          <a href="{{url_for('user.show_departures')}}" class="btn btn-primary fade-in">Departure list</a>
+          <a href="{{url_for('user.search_vessel')}}" class="btn btn-primary fade-in">Vessel info</a>
           <!-- <img src="{{ url_for('static',filename='images/ship.png') }}" class="img-fluid" alt=""> -->
 
         </div>
