@@ -19,6 +19,15 @@ koja se nalaze u Hrvatskom registru brodova i koji plove sjevernim djelom Jadran
 - notifikacija adminu u slučaju prekrcaja broda
 
 ---
+### Struktura aplikacije ###
+Aplikacija je podjeljenja na:
+- API za korisnika
+- API za Admina
+
+   API za korisnika uključuje funkcije koje omogućavaju pregled podataka o brodovima, putovanjima, prijavu i zaključivanje putovanja te statistiku
+   
+   API za Admina uključuje upis/editiranje/brisanje plovila u/iz registra
+---
 ## Pokretanje aplikacije lokalno ##
 
 1. Preuzimanje i raspakiravanje svih podataka sa git repozitorija u direktorij
