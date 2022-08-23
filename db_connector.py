@@ -150,17 +150,18 @@ def add_voyage(voyage_data):
 
                     voyage_ids = orm.select(voyage.id for voyage in Voyage)[:]
                     voyage_ids.sort()
-                    print(voyage_ids)
-                    print(voyage_ids[-1])
 
-                    alert_data["id"] = voyage_ids[-1]
+                    alert_data["id"] = voyage_ids[-1] #last added voyage
                     alert_data["IMO"] = IMO
                     alert_data["name"] = name
                     alert_data["passengers"] = passengers
                     alert_data["pass_cap"] = vsl_pass_cap
                     alert_data["DG"] = DG
-                
-                    add_alert(alert_data)
+
+                    try:
+                        add_alert(alert_data)
+                    except Exception as e:
+                        return {"response":"Fail","error":str(e)}
 
 
             return response
