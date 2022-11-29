@@ -6,6 +6,8 @@
 Aplikacija pruža osnovne funkcionalnosti [CIMIS](https://cimis.pomorstvo.hr/ords/f?p=100:1:11980871426075:GOST_APLIKACIJE::::) sustava koji koristi Ministarstvo mora, prometa i infrastrukture za vođenje evidencije o plovilima
 koja se nalaze u Hrvatskom registru brodova i koji plove sjevernim djelom Jadrana. 
 
+[Video demonstracija aplikacije](https://youtu.be/QDbW3rUIouY)
+
 ### Osnovne funkcionalnosti uključuju: ###
 - upisivanje novih plovila i svih podataka o njima u registar
 - brisanje zapisa i editiranje postojećih podataka
